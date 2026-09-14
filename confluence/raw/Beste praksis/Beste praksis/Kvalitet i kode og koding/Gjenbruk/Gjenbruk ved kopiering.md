@@ -1,0 +1,13 @@
+
+# Gjenbruk ved kopiering
+
+Status: <mark style="background: #baf3db;">I BRUK</mark>
+
+| **Fordeler** | **Ulemper** |
+| --- | --- |
+| <mark style="background: #fffae6;">Dette er gjenbruk ved klipp og lim fra annen kode, enten ekstern (stack overflow, google, ChatGPT etc) eller intern.</mark> | <mark style="background: #fffae6;">Dette er gjenbruk ved klipp og lim fra annen kode, enten ekstern (stack overflow, google, ChatGPT etc) eller intern.</mark> |
+| - Slipper å finne opp hjulet på nytt. Nøkkelspørsmål: “Har noen andre løst dette problemet før?” <br>- Sparer tid og kost sammenlignet med å kode selv. | - Får ikke med feilrettinger og forbedringer av opprinnelig kode. <br>- Sikkerhet og forståelse. Forstår vi virkelig hva den innkopierte koden gjør? |
+| <mark style="background: #abf5d1;">**Eksempler og god praksis**</mark> | <mark style="background: #abf5d1;">**Eksempler og god praksis**</mark> |
+| <mark style="background: #ffffff;">[Anbefalinger ved kopiering av kode fra eksterne kilder](Gjenbruk%20ved%20kopiering/Anbefalinger%20ved%20kopiering%20av%20kode%20fra%20eksterne%20kilder.md) <br/> [Regler og anbefalinger fra KVAKK](../Regler%20og%20anbefalinger%20fra%20KVAKK.md) <br/> [Veileder for bruk av generativ kunstig intelligens i SSB](https://ssbno.sharepoint.com/:w:/r/sites/Megsomansatt/_layouts/15/Doc.aspx?sourcedoc=%7BB4638CC6-BCCC-4375-B2DD-9E3EC4B9C3E8%7D&file=Veileder%20for%20bruk%20av%20generativ%20kunstig%20intelligens%20i%20SSB%20%20-%20okt23.docx&action=default&mobileredirect=true)</mark> | <mark style="background: #ffffff;">[Anbefalinger ved kopiering av kode fra eksterne kilder](Gjenbruk%20ved%20kopiering/Anbefalinger%20ved%20kopiering%20av%20kode%20fra%20eksterne%20kilder.md) <br/> [Regler og anbefalinger fra KVAKK](../Regler%20og%20anbefalinger%20fra%20KVAKK.md) <br/> [Veileder for bruk av generativ kunstig intelligens i SSB](https://ssbno.sharepoint.com/:w:/r/sites/Megsomansatt/_layouts/15/Doc.aspx?sourcedoc=%7BB4638CC6-BCCC-4375-B2DD-9E3EC4B9C3E8%7D&file=Veileder%20for%20bruk%20av%20generativ%20kunstig%20intelligens%20i%20SSB%20%20-%20okt23.docx&action=default&mobileredirect=true)</mark> |
+| <mark style="background: #b3d4ff;">**Når**</mark> | <mark style="background: #b3d4ff;">**Når**</mark> |
+| <mark style="background: #ffffff;">Hvis det er ingen andre som trenger samme kode. Hvis det er to eller flere repoer/team i SSB som trenger den samme koden, så gå for bibliotek.</mark> | <mark style="background: #ffffff;">Hvis det er ingen andre som trenger samme kode. Hvis det er to eller flere repoer/team i SSB som trenger den samme koden, så gå for bibliotek.</mark> |
