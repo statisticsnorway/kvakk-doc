@@ -1,0 +1,563 @@
+{
+  "lockfile_version": 2,
+  "last_export": "2026-09-12T08:45:48.513209+00:00",
+  "orgs": {
+    "https://statistics-norway.atlassian.net": {
+      "spaces": {
+        "BEST": {
+          "pages": {
+            "2951905285": {
+              "title": "Hvordan løse en merge-konflikt?",
+              "version": 8,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan løse en merge-konflikt_.md",
+              "attachments": {
+                "att2952232996": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/1745c5c2-044c-4858-9061-8ced11968940.png"
+                },
+                "att2952593433": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/b15bcdc7-2d46-418f-bd29-671b4028a374.png"
+                }
+              }
+            },
+            "3006889999": {
+              "title": "Versjonskontroll med Git",
+              "version": 17,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git.md",
+              "attachments": {}
+            },
+            "3041492993": {
+              "title": "Regler og anbefalinger fra KVAKK",
+              "version": 70,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Regler og anbefalinger fra KVAKK.md",
+              "attachments": {}
+            },
+            "3041493000": {
+              "title": "Hvordan-beskrivelser",
+              "version": 9,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser.md",
+              "attachments": {}
+            },
+            "3041493011": {
+              "title": "Hvordan konfigurere git (git config) etter SSB-standard?",
+              "version": 76,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan konfigurere git (git config) etter SSB-standard_.md",
+              "attachments": {}
+            },
+            "3047030850": {
+              "title": "Hvordan opprette GitHub-konto og bli medlem i SSB sin organisasjon der?",
+              "version": 21,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan opprette GitHub-konto og bli medlem i SSB sin organisasjon der_.md",
+              "attachments": {}
+            },
+            "3051257910": {
+              "title": "Hvordan installere Git",
+              "version": 14,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan installere Git.md",
+              "attachments": {}
+            },
+            "3069476887": {
+              "title": "Offentlighetsloven og rett til innsyn i kildekode",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Regler og anbefalinger fra KVAKK/Offentlighetsloven og rett til innsyn i kildekode.md",
+              "attachments": {
+                "att3069476896": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/8351775f-ddc4-415e-9832-2af20e77a39a.pdf"
+                }
+              }
+            },
+            "3092643867": {
+              "title": "Hvordan bidra til andres GitHub-repoer (forking)",
+              "version": 9,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan bidra til andres GitHub-repoer (forking).md",
+              "attachments": {}
+            },
+            "3092709381": {
+              "title": "Hvordan opprette nytt GitHub-repo?",
+              "version": 31,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan opprette nytt GitHub-repo_.md",
+              "attachments": {
+                "att4871716916": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/dd570011-6b81-47de-a03a-5171cea8b423.png"
+                }
+              }
+            },
+            "3121020996": {
+              "title": "Hvordan sette opp Windows til å bruke UTF-8 som tegnsett?",
+              "version": 3,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan konfigurere git (git config) etter SSB-standard_/Hvordan sette opp Windows til å bruke UTF-8 som tegnsett_.md",
+              "attachments": {
+                "att3120758935": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/351309db-5142-4fe4-8d57-da810b7f489b.png"
+                }
+              }
+            },
+            "3206283277": {
+              "title": "Hvordan er anbefalt git arbeidsflyt?",
+              "version": 15,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan er anbefalt git arbeidsflyt_.md",
+              "attachments": {
+                "att4116906069": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/c8b2e245-8773-42ec-88c2-c1c8c12b94da.png"
+                }
+              }
+            },
+            "3216703491": {
+              "title": "Hvordan håndtere hemmeligheter og passord i git?",
+              "version": 28,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan håndtere hemmeligheter og passord i git_.md",
+              "attachments": {
+                "att4395204782": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/0e7a44be-cffe-4666-97bf-2e188435f245.png"
+                },
+                "att4395040881": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/8e7faa79-ecad-42ea-9d56-07a4655eeefe.png"
+                },
+                "att3217096874": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/ef79abde-d679-4059-87de-f9ed88462ed1.png"
+                },
+                "att3217555563": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/4ced1f25-7307-4685-b81b-0c350d2e7638.png"
+                }
+              }
+            },
+            "3220013195": {
+              "title": "Hvordan opprette Pull Requests i GitHub?",
+              "version": 10,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan opprette Pull Requests i GitHub_.md",
+              "attachments": {}
+            },
+            "3223420981": {
+              "title": "Trinnvis arbeid",
+              "version": 21,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Generelle kodeprinsipper/Trinnvis arbeid.md",
+              "attachments": {}
+            },
+            "3226861602": {
+              "title": "Kontrollert overgang fra utviklingsmiljø til produksjonsmiljø",
+              "version": 20,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Generelle kodeprinsipper/Kontrollert overgang fra utviklingsmiljø til produksjonsmiljø.md",
+              "attachments": {}
+            },
+            "3236037032": {
+              "title": "Velg riktig verktøy for jobben",
+              "version": 14,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Generelle kodeprinsipper/Velg riktig verktøy for jobben.md",
+              "attachments": {}
+            },
+            "3255533569": {
+              "title": "Hold det enkelt",
+              "version": 22,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Generelle kodeprinsipper/Hold det enkelt.md",
+              "attachments": {}
+            },
+            "3261464609": {
+              "title": "ADR0006 - Retningslinjer for åpen kildekode i SSB",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/ADR0006 - Retningslinjer for åpen kildekode i SSB.md",
+              "attachments": {}
+            },
+            "3261497397": {
+              "title": "Kvalitet i kode og koding",
+              "version": 10,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding.md",
+              "attachments": {}
+            },
+            "3261693965": {
+              "title": "ADR0003 - Språk i teknisk dokumentasjon og kode",
+              "version": 3,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Regler og anbefalinger fra KVAKK/ADR0003 - Språk i teknisk dokumentasjon og kode.md",
+              "attachments": {}
+            },
+            "3282501633": {
+              "title": "Eksempel på språk i kode med eksterne norske navn",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Eksempel på språk i kode med eksterne norske navn.md",
+              "attachments": {}
+            },
+            "3348856833": {
+              "title": "Eksempel på commit-melding",
+              "version": 2,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan er anbefalt git arbeidsflyt_/Eksempel på commit-melding.md",
+              "attachments": {}
+            },
+            "3386474532": {
+              "title": "Hva anses som hemmeligheter i kode i SSB?",
+              "version": 10,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan håndtere hemmeligheter og passord i git_/Hva anses som hemmeligheter i kode i SSB_.md",
+              "attachments": {}
+            },
+            "3410952960": {
+              "title": "Generelle kodeprinsipper",
+              "version": 3,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Generelle kodeprinsipper.md",
+              "attachments": {}
+            },
+            "3527213501": {
+              "title": "Gjenbruk av kodebiblioteker",
+              "version": 13,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk av kodebiblioteker.md",
+              "attachments": {}
+            },
+            "3527606506": {
+              "title": "Gjenbruk ved kopiering",
+              "version": 20,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk ved kopiering.md",
+              "attachments": {}
+            },
+            "3527868592": {
+              "title": "Gjenbruk i egen kode",
+              "version": 22,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk i egen kode.md",
+              "attachments": {}
+            },
+            "3527934101": {
+              "title": "Fellestjenester",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Fellestjenester.md",
+              "attachments": {}
+            },
+            "3527966755": {
+              "title": "Gjenbruk",
+              "version": 35,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk.md",
+              "attachments": {}
+            },
+            "3563421962": {
+              "title": "Kodeeksempler på gjenbruk med Python",
+              "version": 21,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk i egen kode/Kodeeksempler på gjenbruk med Python.md",
+              "attachments": {}
+            },
+            "3563454645": {
+              "title": "God praksis ved gjenbruk i egen kode med funksjoner i Python og Jupyter Notebooks",
+              "version": 11,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk i egen kode/God praksis ved gjenbruk i egen kode med funksjoner i Python og Jupyter Notebooks.md",
+              "attachments": {}
+            },
+            "3565748420": {
+              "title": "SonarQube Cloud kodekvalitetsverktøy",
+              "version": 31,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/SonarQube Cloud kodekvalitetsverktøy.md",
+              "attachments": {}
+            },
+            "3570434062": {
+              "title": "Hvordan-beskrivelser for gjenbruk",
+              "version": 6,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk.md",
+              "attachments": {}
+            },
+            "3574530261": {
+              "title": "Hvordan lage et python-bibliotek etter SSB standard?",
+              "version": 92,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/Hvordan lage et python-bibliotek etter SSB standard_.md",
+              "attachments": {}
+            },
+            "3580428373": {
+              "title": "Hvordan konfigurere et public GitHub-repo for biblioteker?",
+              "version": 8,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan konfigurere et public GitHub-repo for biblioteker_.md",
+              "attachments": {}
+            },
+            "3580592220": {
+              "title": "Anbefalinger ved kopiering av kode fra eksterne kilder",
+              "version": 6,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk ved kopiering/Anbefalinger ved kopiering av kode fra eksterne kilder.md",
+              "attachments": {}
+            },
+            "3682828543": {
+              "title": "Hvordan opprette Sonar token manuelt?",
+              "version": 2,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/SonarQube Cloud kodekvalitetsverktøy/Hvordan opprette Sonar token manuelt_.md",
+              "attachments": {
+                "att3682599421": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/50e1e5ce-76b9-4769-89a5-c7e86ada0d1c.png"
+                },
+                "att3683516779": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/52efb79e-ea5b-4e69-8b20-62f0b10b8146.png"
+                },
+                "att3682926880": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/84110e91-a96f-4a9b-9d9c-96d10fb85547.png"
+                }
+              }
+            },
+            "3910959212": {
+              "title": "Hvordan-beskrivelser for test og kodekvalitet",
+              "version": 10,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet.md",
+              "attachments": {}
+            },
+            "3911122953": {
+              "title": "Test og kodekvalitet",
+              "version": 43,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet.md",
+              "attachments": {}
+            },
+            "3913941162": {
+              "title": "Eksempler på bruk av pytest",
+              "version": 30,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Eksempler på bruk av pytest.md",
+              "attachments": {}
+            },
+            "3915939861": {
+              "title": "Oppsett og komme i gang med pytest",
+              "version": 14,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Eksempler på bruk av pytest/Oppsett og komme i gang med pytest.md",
+              "attachments": {}
+            },
+            "3925147685": {
+              "title": "Hvordan automatisere Jupyter notebooks ved bruk av funksjoner?",
+              "version": 21,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Hvordan automatisere Jupyter notebooks ved bruk av funksjoner_.md",
+              "attachments": {
+                "att3926917483": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/ea0c6be4-7646-453a-a51b-4f4bafb9d44c.png"
+                },
+                "att3926917466": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/19c8e1ae-6a7f-4328-bc8d-4538144686ad.png"
+                }
+              }
+            },
+            "3930423362": {
+              "title": "Eksempler på enhetstester i R",
+              "version": 3,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Eksempler på enhetstester i R.md",
+              "attachments": {}
+            },
+            "3941400998": {
+              "title": "Hvordan automatisere tester med GitHub Actions?",
+              "version": 12,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Hvordan automatisere tester med GitHub Actions_.md",
+              "attachments": {}
+            },
+            "3964633120": {
+              "title": "Hvordan formatere koden ved hjelp av verktøy?",
+              "version": 11,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Hvordan formatere koden ved hjelp av verktøy_.md",
+              "attachments": {
+                "att4100227387": {
+                  "version": 3,
+                  "path": "Beste praksis/attachments/1ea6d4a3-8852-437e-b8a4-5d205f391a72.png"
+                }
+              }
+            },
+            "3966075065": {
+              "title": "Hvordan importere egendefinerte funksjoner i Jupyter Notebooks?",
+              "version": 7,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/Hvordan importere egendefinerte funksjoner i Jupyter Notebooks_.md",
+              "attachments": {}
+            },
+            "4099637477": {
+              "title": "Kodekvalitetsverktøy for R",
+              "version": 2,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Test og kodekvalitet/Hvordan-beskrivelser for test og kodekvalitet/Kodekvalitetsverktøy for R.md",
+              "attachments": {
+                "att4100325655": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/556d76e7-1072-4c72-8111-7db8abe579c4.png"
+                }
+              }
+            },
+            "4111400971": {
+              "title": "Hvordan oppdatere GitHub-repo med oppdateringer fra underliggende mal?",
+              "version": 26,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/Hvordan oppdatere GitHub-repo med oppdateringer fra underliggende mal_.md",
+              "attachments": {
+                "att4112482305": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/1550cfff-bc0d-46b5-ac0e-0f54549bb9cc.png"
+                },
+                "att4111761415": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/240fc9bf-d6b9-4c69-be2d-d84931d3973a.png"
+                }
+              }
+            },
+            "4172021930": {
+              "title": "Hvordan samarbeide om kode?",
+              "version": 18,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_.md",
+              "attachments": {}
+            },
+            "4213834134": {
+              "title": "Psykologisk trygghet",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Psykologisk trygghet.md",
+              "attachments": {}
+            },
+            "4214882562": {
+              "title": "Hvordan gi konstruktive tilbakemeldinger på kode",
+              "version": 6,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Hvordan gi konstruktive tilbakemeldinger på kode.md",
+              "attachments": {}
+            },
+            "4215603286": {
+              "title": "Bruk av pull requests",
+              "version": 14,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Bruk av pull requests.md",
+              "attachments": {}
+            },
+            "4341530670": {
+              "title": "Hvordan bruke pull request på GitHub?",
+              "version": 23,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Bruk av pull requests/Hvordan bruke pull request på GitHub_.md",
+              "attachments": {
+                "att4589453495": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/e3744c02-8f16-4f40-a73a-3639a22054e7.png"
+                },
+                "att4589617278": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/f29935bc-0e0f-4524-9fe9-13001bc89c59.png"
+                },
+                "att4589781132": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/01cff59f-a72c-46f2-9811-64460aeb39a1.png"
+                },
+                "att4590108773": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/1e441109-152f-4201-b50e-47a3d7b8a677.png"
+                },
+                "att4590305303": {
+                  "version": 2,
+                  "path": "Beste praksis/attachments/5f3846d1-4f40-4c9c-ba21-93276da80ce0.png"
+                },
+                "att4590207098": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/0f0a3de1-bcab-4ff0-9fda-581db05d7cf3.png"
+                },
+                "att4590174250": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/df491e95-f943-447e-b73a-ccac383e5626.png"
+                },
+                "att4590207050": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/becd5657-7940-4f96-b6ed-31024d06eb90.png"
+                },
+                "att4573986920": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/3a878e54-48b5-481f-bd96-db13257077fb.png"
+                },
+                "att4574773260": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/cd96fa6d-8873-4109-b97e-d851fbd82230.png"
+                },
+                "att4574478392": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/5da80ee1-8050-4e63-860c-19b6fd47af49.png"
+                },
+                "att4574019650": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/f0b60a64-6905-4d39-8f4e-63b04c1feb78.png"
+                },
+                "att4574183495": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/9f18797e-9f65-4f15-94db-dabd79957156.png"
+                },
+                "att4574445602": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/cf997a45-2300-48a6-a2fe-862dcfa10915.png"
+                }
+              }
+            },
+            "4478828557": {
+              "title": "Hvordan lage et R-bibliotek etter SSB standard?",
+              "version": 3,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Hvordan-beskrivelser for gjenbruk/Hvordan lage et R-bibliotek etter SSB standard_.md",
+              "attachments": {
+                "att4478402638": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/0ea43740-26e7-4750-ab02-67ab749f2405.png"
+                },
+                "att4478631995": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/3cff94a5-d43b-409e-a591-033aaed79c2e.png"
+                },
+                "att4478926925": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/2938a719-60ed-4690-8a4b-23af5c9d0c20.png"
+                },
+                "att4478107727": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/de0ee65f-586d-4dfe-8223-a4b5428eb385.png"
+                }
+              }
+            },
+            "4500029445": {
+              "title": "Samkoding",
+              "version": 7,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Samkoding.md",
+              "attachments": {}
+            },
+            "4500127746": {
+              "title": "Parprogrammering",
+              "version": 7,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Parprogrammering.md",
+              "attachments": {}
+            },
+            "4500193303": {
+              "title": "Hvis man står fast eller behøver hjelp - hvem kontaktes?",
+              "version": 5,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Hvis man står fast eller behøver hjelp - hvem kontaktes_.md",
+              "attachments": {}
+            },
+            "4516380848": {
+              "title": "Oppgavedeling",
+              "version": 11,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Hvordan samarbeide om kode_/Oppgavedeling.md",
+              "attachments": {}
+            },
+            "4777345078": {
+              "title": "PyPI organisasjon",
+              "version": 13,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Gjenbruk/Gjenbruk av kodebiblioteker/PyPI organisasjon.md",
+              "attachments": {
+                "att5042208787": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/a4963eff-23d6-464e-b8d8-2671778e2fb1.png"
+                },
+                "att4777803782": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/48c9a0d3-867d-4267-bd14-3cf38e6b5c5d.png"
+                }
+              }
+            },
+            "5019467821": {
+              "title": "Hvordan tagge kode og lage en GitHub-release",
+              "version": 2,
+              "export_path": "Beste praksis/Beste praksis/Kvalitet i kode og koding/Versjonskontroll med Git/Hvordan-beskrivelser/Hvordan tagge kode og lage en GitHub-release.md",
+              "attachments": {
+                "att5059117068": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/d47fdd91-d9e8-4c70-8d02-fcdce1c4a536.png"
+                },
+                "att5057904648": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/d1e4e5af-fa56-4d3f-84fa-906f25e89fd9.png"
+                },
+                "att5058166801": {
+                  "version": 1,
+                  "path": "Beste praksis/attachments/9a79415c-18fb-4d0f-9664-cd11f4d6f6b3.png"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
