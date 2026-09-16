@@ -54,7 +54,7 @@ and source URLs are stored in `config/export.json`.
 Run this command from the root directory of the git-repo:
 
 ```shell
-uv run python scripts/export.py
+uv run export-confluence
 ```
 
 
