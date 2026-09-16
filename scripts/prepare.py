@@ -8,6 +8,8 @@ import sys
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit, urlunsplit
 
+import markdown
+
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "confluence" / "raw"
@@ -21,6 +23,22 @@ CALLOUT = re.compile(r"^(?P<indent>\s*)> \[!(?P<kind>IMPORTANT|WARNING)\]\s*$")
 INACCESSIBLE = re.compile(r"Page not accessible \(ID: (?P<id>\d+)\)")
 WIKI_TEXT = re.compile(r"\[\[[^]]+\]\]")
 DETAILS = re.compile(r"^(?P<indent>\s*)<details>\s*$", flags=re.MULTILINE)
+PEOPLE_LINK = re.compile(
+    r"\[[^\]\n]*\]\("
+    r"(?:https://statistics-norway\.atlassian\.net)?/(?:wiki/)?people/[^)\n]*"
+    r"\)"
+)
+TABLE_SEPARATOR = re.compile(r"^:?-{3,}:?$")
+ESCAPED_EMOJI = re.compile(
+    r"\\uD[89AB][0-9A-F]{2}\\uD[C-F][0-9A-F]{2}[\t \u00a0]*",
+    flags=re.IGNORECASE,
+)
+LINE_BREAK = re.compile(r"\s*<br\s*/?>\s*", flags=re.IGNORECASE)
+FULL_MARK = re.compile(
+    r'^<mark\s+style="background:\s*(?P<color>#[0-9a-fA-F]{6});?">'
+    r"(?P<body>.*)</mark>$",
+    flags=re.DOTALL,
+)
 
 
 def safe_source_path(relative_path: str) -> Path:
@@ -142,6 +160,162 @@ def convert_callouts(text: str) -> str:
 
 def enable_markdown_in_details(text: str) -> str:
     return DETAILS.sub(r'\g<indent><details markdown="1">', text)
+
+
+def split_table_row(line: str) -> list[str] | None:
+    stripped = line.rstrip("\r\n").strip()
+    if not stripped.startswith("|") or not stripped.endswith("|"):
+        return None
+    return [cell.strip() for cell in stripped[1:-1].split("|")]
+
+
+def remove_people(text: str) -> str:
+    lines = text.splitlines(keepends=True)
+    output: list[str] = []
+    index = 0
+    while index < len(lines):
+        header = split_table_row(lines[index])
+        separator = (
+            split_table_row(lines[index + 1]) if index + 1 < len(lines) else None
+        )
+        if (
+            header is None
+            or separator is None
+            or len(header) != len(separator)
+            or not all(TABLE_SEPARATOR.fullmatch(cell) for cell in separator)
+        ):
+            output.append(lines[index])
+            index += 1
+            continue
+
+        table: list[tuple[list[str], str, str]] = []
+        while index < len(lines):
+            cells = split_table_row(lines[index])
+            if cells is None or len(cells) != len(header):
+                break
+            newline = "\r\n" if lines[index].endswith("\r\n") else "\n"
+            table.append((cells, newline, lines[index]))
+            index += 1
+
+        removed = {
+            column
+            for cells, _, _ in table
+            for column, cell in enumerate(cells)
+            if PEOPLE_LINK.search(cell)
+        }
+        if not removed:
+            output.extend(raw for _, _, raw in table)
+            continue
+        output.extend(
+            "| "
+            + " | ".join(
+                cell for column, cell in enumerate(cells) if column not in removed
+            )
+            + " |"
+            + newline
+            for cells, newline, _ in table
+        )
+
+    return PEOPLE_LINK.sub("", "".join(output))
+
+
+def remove_escaped_emoji(text: str) -> str:
+    output: list[str] = []
+    in_fence = False
+    fence = ""
+    for line in text.splitlines(keepends=True):
+        fence_match = re.match(r"^\s*(`{3,}|~{3,})", line)
+        if fence_match:
+            marker = fence_match.group(1)
+            if not in_fence:
+                in_fence, fence = True, marker[0]
+            elif marker[0] == fence:
+                in_fence = False
+            output.append(line)
+            continue
+        output.append(line if in_fence else ESCAPED_EMOJI.sub("", line))
+    return "".join(output)
+
+
+def render_table_cell(cell: str) -> tuple[str, str]:
+    style = ""
+    mark = FULL_MARK.fullmatch(cell.strip())
+    if mark:
+        style = f' style="background: {mark["color"]};"'
+        cell = mark["body"]
+
+    parts = [part.strip() for part in LINE_BREAK.split(cell) if part.strip()]
+    if any(part.startswith("- ") for part in parts):
+        items: list[str] = []
+        has_parent = False
+        for part in parts:
+            content = part[2:].strip() if part.startswith("- ") else part
+            if (not part.startswith("- ") or content.startswith("[")) and has_parent:
+                items.append(f"    - {content}")
+            else:
+                items.append(f"- {content}")
+                has_parent = True
+        cell = "\n".join(items)
+
+    rendered = markdown.markdown(cell).strip()
+    if rendered.startswith("<p>") and rendered.endswith("</p>"):
+        rendered = rendered[3:-4]
+    return rendered, style
+
+
+def convert_complex_tables(text: str) -> str:
+    lines = text.splitlines(keepends=True)
+    output: list[str] = []
+    index = 0
+    while index < len(lines):
+        header = split_table_row(lines[index])
+        separator = (
+            split_table_row(lines[index + 1]) if index + 1 < len(lines) else None
+        )
+        if (
+            header is None
+            or separator is None
+            or len(header) != len(separator)
+            or not all(TABLE_SEPARATOR.fullmatch(cell) for cell in separator)
+        ):
+            output.append(lines[index])
+            index += 1
+            continue
+
+        rows: list[list[str]] = []
+        cursor = index + 2
+        while cursor < len(lines):
+            cells = split_table_row(lines[cursor])
+            if cells is None or len(cells) != len(header):
+                break
+            rows.append(cells)
+            cursor += 1
+
+        is_complex = any(
+            len(set(row)) == 1 or any(LINE_BREAK.search(cell) for cell in row)
+            for row in rows
+        )
+        if not is_complex:
+            output.extend(lines[index:cursor])
+            index = cursor
+            continue
+
+        output.extend(["<table>\n", "  <thead>\n", "    <tr>\n"])
+        for cell in header:
+            rendered, style = render_table_cell(cell)
+            output.append(f"      <th{style}>{rendered}</th>\n")
+        output.extend(["    </tr>\n", "  </thead>\n", "  <tbody>\n"])
+        for row in rows:
+            output.append("    <tr>\n")
+            cells = [row[0]] if len(set(row)) == 1 else row
+            for cell in cells:
+                rendered, style = render_table_cell(cell)
+                colspan = f' colspan="{len(row)}"' if len(cells) == 1 else ""
+                output.append(f"      <td{colspan}{style}>{rendered}</td>\n")
+            output.append("    </tr>\n")
+        output.extend(["  </tbody>\n", "</table>\n"])
+        index = cursor
+    return "".join(output)
 
 
 def split_destination(destination: str) -> tuple[str, str]:
@@ -303,6 +477,8 @@ def prepare() -> list[str]:
         report_source_artifacts(text, source, diagnostics)
         text = convert_callouts(text)
         text = enable_markdown_in_details(text)
+        text = remove_people(text)
+        text = remove_escaped_emoji(text)
         text = rewrite_links(
             text,
             source,
@@ -312,6 +488,7 @@ def prepare() -> list[str]:
             attachment_map,
             diagnostics,
         )
+        text = convert_complex_tables(text)
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(text.rstrip("\n") + "\n", encoding="utf-8")
 

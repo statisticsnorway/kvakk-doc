@@ -332,6 +332,7 @@ source = { editable = "." }
 dependencies = [
     { name = "confluence-markdown-exporter" },
     { name = "httpx" },
+    { name = "markdown" },
     { name = "pytest" },
     { name = "python-dotenv" },
     { name = "zensical" },
@@ -341,6 +342,7 @@ dependencies = [
 requires-dist = [
     { name = "confluence-markdown-exporter", specifier = ">=5.4,<6" },
     { name = "httpx", specifier = ">=0.28,<1" },
+    { name = "markdown", specifier = ">=3.10,<4" },
     { name = "pytest", specifier = ">=8.4,<9" },
     { name = "python-dotenv", specifier = ">=1.1,<2" },
     { name = "zensical", specifier = ">=0.0.62,<0.1" },

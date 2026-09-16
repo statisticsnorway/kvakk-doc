@@ -1,13 +1,63 @@
 {
   "export": {
-    "output_path": "./confluence/raw",
+    "log_level": "INFO",
+    "save_log_to_file": false,
+    "output_path": "confluence/raw",
     "page_href": "relative",
+    "page_path": "{space_name}/{homepage_title}/{ancestor_titles}/{page_title}.md",
     "attachment_href": "relative",
+    "attachment_path": "{space_name}/attachments/{attachment_file_id}{attachment_extension}",
     "attachments_export": "referenced",
-    "include_document_title": true,
+    "image_captions": false,
     "page_breadcrumbs": false,
-    "include_toc": false,
+    "table_column_width": "mixed",
     "page_properties_format": "table",
-    "comments_export": "none"
+    "page_properties_report_format": "frozen",
+    "confluence_url_in_frontmatter": "none",
+    "page_metadata_in_frontmatter": false,
+    "filename_encoding": "\"<\":\"_\",\">\":\"_\",\":\":\"_\",\"\\\"\":\"_\",\"/\":\"_\",\"\\\\\":\"_\",\"|\":\"_\",\"?\":\"_\",\"*\":\"_\",\"\\u0000\":\"_\",\"[\":\"_\",\"]\":\"_\",\"'\":\"_\",\"’\":\"_\",\"´\":\"_\",\"`\":\"_\"",
+    "filename_length": 255,
+    "filename_lowercase": false,
+    "include_document_title": true,
+    "include_toc": false,
+    "include_macro": "inline",
+    "enable_jira_enrichment": true,
+    "comments_export": "none",
+    "convert_status_badges": true,
+    "convert_text_highlights": true,
+    "convert_font_colors": true,
+    "skip_unchanged": true,
+    "cleanup_stale": true,
+    "lockfile_name": "confluence-lock.json",
+    "existence_check_batch_size": 250
+  },
+  "connection_config": {
+    "backoff_and_retry": true,
+    "backoff_factor": 2,
+    "max_backoff_seconds": 60,
+    "max_backoff_retries": 5,
+    "retry_status_codes": [
+      413,
+      429,
+      502,
+      503,
+      504
+    ],
+    "verify_ssl": true,
+    "timeout": 30,
+    "use_v2_api": false,
+    "max_workers": 20
+  },
+  "auth": {
+    "confluence": {
+      "https://statistics-norway.atlassian.net": {
+        "username": "",
+        "api_token": "",
+        "pat": "",
+        "session_cookies": "",
+        "cloud_id": "bdafa676-276d-441e-a450-26547c4959cf"
+      }
+    },
+    "jira": {}
   }
 }

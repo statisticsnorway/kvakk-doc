@@ -12,3 +12,8 @@
   height: auto;
   max-width: 100%;
 }
+
+.md-typeset td[colspan] > strong:only-child {
+  display: block;
+  text-align: center;
+}
