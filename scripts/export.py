@@ -6,6 +6,7 @@ import shutil
 import subprocess
 from pathlib import Path
 
+import httpx
 from dotenv import load_dotenv
 
 
@@ -26,6 +27,35 @@ def required_env(name: str) -> str:
             "or in the environment."
         )
     return value
+
+
+def get_cloud_id(confluence_url: str) -> str:
+    if cloud_id := os.environ.get("CONFLUENCE_CLOUD_ID", "").strip():
+        return cloud_id
+
+    tenant_info_url = f"{confluence_url}/_edge/tenant_info"
+    try:
+        response = httpx.get(
+            tenant_info_url,
+            headers={"Accept": "application/json", "User-Agent": "kvakk-doc-export"},
+            timeout=10,
+        )
+        response.raise_for_status()
+        tenant_info: object = response.json()
+    except (httpx.HTTPError, json.JSONDecodeError) as error:
+        raise SystemExit(
+            "Could not discover CONFLUENCE_CLOUD_ID from "
+            f"{tenant_info_url}: {error}. Set it explicitly in .env."
+        ) from error
+
+    if not isinstance(tenant_info, dict) or not isinstance(
+        cloud_id := tenant_info.get("cloudId"), str
+    ):
+        raise SystemExit(
+            f"No Cloud ID was returned by {tenant_info_url}. "
+            "Set CONFLUENCE_CLOUD_ID explicitly in .env."
+        )
+    return cloud_id
 
 
 def load_export_config() -> tuple[str, list[str]]:
@@ -55,7 +85,7 @@ def main() -> None:
             confluence_url: {
                 "username": required_env("CONFLUENCE_USERNAME"),
                 "api_token": required_env("CONFLUENCE_API_TOKEN"),
-                "cloud_id": required_env("CONFLUENCE_CLOUD_ID"),
+                "cloud_id": get_cloud_id(confluence_url),
             }
         }
     }

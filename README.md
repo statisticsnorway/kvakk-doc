@@ -40,9 +40,11 @@ uv sync
 Copy-Item config/.env.example .env
 ```
 
-Add the Confluence username, API token, and Cloud ID to `.env`. This file
-is ignored by Git. Environment variables set by the shell or CI take precedence
-over values in the file.
+Add the Confluence username and API token to `.env`. The Cloud ID is discovered
+automatically from Atlassian on each run when `CONFLUENCE_CLOUD_ID` is empty. Set
+it explicitly if automatic discovery is unavailable. This file is ignored by
+Git. Environment variables set by the shell or CI take precedence over values
+in the file.
 
 The non-secret CME settings are stored in `config/cme.json`. The export command
 and source URLs are stored in `config/export.json`.
