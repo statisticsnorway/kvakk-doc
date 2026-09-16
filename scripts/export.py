@@ -30,9 +30,6 @@ def required_env(name: str) -> str:
 
 
 def get_cloud_id(confluence_url: str) -> str:
-    if cloud_id := os.environ.get("CONFLUENCE_CLOUD_ID", "").strip():
-        return cloud_id
-
     tenant_info_url = f"{confluence_url}/_edge/tenant_info"
     try:
         response = httpx.get(
@@ -44,16 +41,15 @@ def get_cloud_id(confluence_url: str) -> str:
         tenant_info: object = response.json()
     except (httpx.HTTPError, json.JSONDecodeError) as error:
         raise SystemExit(
-            "Could not discover CONFLUENCE_CLOUD_ID from "
-            f"{tenant_info_url}: {error}. Set it explicitly in .env."
+            f"Could not discover the Confluence Cloud ID from {tenant_info_url}: "
+            f"{error}"
         ) from error
 
     if not isinstance(tenant_info, dict) or not isinstance(
         cloud_id := tenant_info.get("cloudId"), str
     ):
         raise SystemExit(
-            f"No Cloud ID was returned by {tenant_info_url}. "
-            "Set CONFLUENCE_CLOUD_ID explicitly in .env."
+            f"No Confluence Cloud ID was returned by {tenant_info_url}."
         )
     return cloud_id
 

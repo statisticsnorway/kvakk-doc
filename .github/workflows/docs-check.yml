@@ -1,0 +1,30 @@
+name: Check documentation
+
+on:
+  pull_request:
+    paths:
+      - confluence/raw/**
+      - docs/**
+      - scripts/**
+      - tests/**
+      - zensical.toml
+      - pyproject.toml
+      - uv.lock
+      - .github/workflows/docs-check.yml
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: astral-sh/setup-uv@d0d8abe699bfb85fec6de9f7adb5ae17292296ff # v6
+        with:
+          enable-cache: true
+      - run: uv python install
+      - run: uv sync --locked
+      - run: uv run prepare-docs
+      - run: uv run pytest
+      - run: uv run zensical build --strict
