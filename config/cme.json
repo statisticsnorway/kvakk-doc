@@ -1,0 +1,13 @@
+{
+  "export": {
+    "output_path": "./confluence/raw",
+    "page_href": "relative",
+    "attachment_href": "relative",
+    "attachments_export": "referenced",
+    "include_document_title": true,
+    "page_breadcrumbs": false,
+    "include_toc": false,
+    "page_properties_format": "table",
+    "comments_export": "none"
+  }
+}

@@ -26,29 +26,33 @@ readonly:content.attachment:confluence
 search:confluence
 ```
 
-### Install and configure the cme tool
+### Install and configure the export tool
 
 ```shell
-cme config edit auth.confluence
-
-cme config set \
-  export.output_path=./confluence/raw \
-  export.page_href=relative \
-  export.attachment_href=relative \
-  export.attachments_export=referenced \
-  export.include_document_title=true \
-  export.page_breadcrumbs=false \
-  export.include_toc=false \
-  export.page_properties_format=table \
-  export.comments_export=none
+uv sync
+cp config/.env.example .env
 ```
+
+On Windows PowerShell, create the environment file with:
+
+```powershell
+uv sync
+Copy-Item config/.env.example .env
+```
+
+Add the Confluence username, API token, and Cloud ID to `.env`. This file
+is ignored by Git. Environment variables set by the shell or CI take precedence
+over values in the file.
+
+The non-secret CME settings are stored in `config/cme.json`. The export command
+and source URLs are stored in `config/export.json`.
 
 ### Export
 
 Run this command from the root directory of the git-repo:
 
 ```shell
-cme pages-with-descendants "https://statistics-norway.atlassian.net/wiki/spaces/BEST/pages/3261497397/Kvalitet+i+kode+og+koding"
+uv run python scripts/export.py
 ```
 
 
