@@ -16,6 +16,8 @@ features = [
   "content.code.copy",
 ]
 
+[project.plugins.awesome-nav]
+
 [project.validation]
 invalid_links = true
 invalid_link_anchors = true

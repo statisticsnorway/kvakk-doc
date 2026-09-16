@@ -13,12 +13,14 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "confluence" / "raw"
 GENERATED_DIR = ROOT / "docs" / "generated"
 LOCK_PATH = RAW_DIR / "confluence-lock.json"
+NAVIGATION_PATH = ROOT / "config" / "navigation.json"
 ROOT_PAGE_ID = "3261497397"
 ATTACHMENTS_DIR = GENERATED_DIR / "assets" / "attachments"
 
 CALLOUT = re.compile(r"^(?P<indent>\s*)> \[!(?P<kind>IMPORTANT|WARNING)\]\s*$")
 INACCESSIBLE = re.compile(r"Page not accessible \(ID: (?P<id>\d+)\)")
 WIKI_TEXT = re.compile(r"\[\[[^]]+\]\]")
+DETAILS = re.compile(r"^(?P<indent>\s*)<details>\s*$", flags=re.MULTILINE)
 
 
 def safe_source_path(relative_path: str) -> Path:
@@ -26,6 +28,39 @@ def safe_source_path(relative_path: str) -> Path:
     if not path.is_relative_to(RAW_DIR.resolve()):
         raise SystemExit(f"Export path leaves {RAW_DIR}: {relative_path}")
     return path
+
+
+def generated_destination(
+    source: Path,
+    root_source: Path,
+    descendant_root: Path,
+    generated_dir: Path = GENERATED_DIR,
+) -> Path:
+    if source == root_source:
+        return generated_dir / "index.md"
+
+    relative = source.relative_to(descendant_root)
+    if source.with_suffix("").is_dir():
+        return generated_dir / relative.with_suffix("") / "index.md"
+    return generated_dir / relative
+
+
+def load_root_navigation() -> list[str]:
+    try:
+        config = json.loads(NAVIGATION_PATH.read_text(encoding="utf-8"))
+        navigation = config["root"]
+    except (OSError, json.JSONDecodeError, KeyError) as error:
+        raise SystemExit(f"Invalid navigation config: {error}") from error
+    if not isinstance(navigation, list) or not all(
+        isinstance(item, str) and item for item in navigation
+    ):
+        raise SystemExit("Navigation config 'root' must be a list of non-empty strings.")
+    return navigation
+
+
+def render_navigation(items: list[str]) -> str:
+    entries = ["  - index.md", *(f"  - {json.dumps(item)}" for item in items)]
+    return "nav:\n" + "\n".join(entries) + "\nappend_unmatched: true\n"
 
 
 def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
@@ -51,12 +86,9 @@ def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
         source = safe_source_path(page["export_path"])
         if not source.is_file() or source.suffix != ".md":
             raise SystemExit(f"Missing exported page: {source.relative_to(ROOT)}")
-        if source == root_source:
-            destination = GENERATED_DIR / "index.md"
-        elif source.is_relative_to(descendant_root):
-            destination = GENERATED_DIR / source.relative_to(descendant_root)
-        else:
+        if source != root_source and not source.is_relative_to(descendant_root):
             continue
+        destination = generated_destination(source, root_source, descendant_root)
         if destination in page_map.values():
             raise SystemExit(f"Generated page collision: {destination.relative_to(ROOT)}")
         page_map[source] = destination
@@ -106,6 +138,10 @@ def convert_callouts(text: str) -> str:
             output.append(f"{indent}    {body}{newline}")
             index += 1
     return "".join(output)
+
+
+def enable_markdown_in_details(text: str) -> str:
+    return DETAILS.sub(r'\g<indent><details markdown="1">', text)
 
 
 def split_destination(destination: str) -> tuple[str, str]:
@@ -256,6 +292,7 @@ def report_source_artifacts(text: str, source: Path, diagnostics: list[str]) -> 
 
 def prepare() -> list[str]:
     origin, page_map, attachment_map = load_export()
+    root_navigation = load_root_navigation()
     if GENERATED_DIR.exists():
         shutil.rmtree(GENERATED_DIR)
     GENERATED_DIR.mkdir(parents=True)
@@ -265,6 +302,7 @@ def prepare() -> list[str]:
         text = source.read_text(encoding="utf-8")
         report_source_artifacts(text, source, diagnostics)
         text = convert_callouts(text)
+        text = enable_markdown_in_details(text)
         text = rewrite_links(
             text,
             source,
@@ -276,6 +314,17 @@ def prepare() -> list[str]:
         )
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(text.rstrip("\n") + "\n", encoding="utf-8")
+
+    available_sections = {
+        path.name for path in GENERATED_DIR.iterdir() if path.is_dir()
+    }
+    missing_sections = set(root_navigation) - available_sections
+    if missing_sections:
+        missing = ", ".join(sorted(missing_sections))
+        raise SystemExit(f"Navigation config references missing sections: {missing}")
+    (GENERATED_DIR / ".nav.yml").write_text(
+        render_navigation(root_navigation), encoding="utf-8"
+    )
 
     for source, destination in sorted(
         attachment_map.items(), key=lambda item: item[1].as_posix()
