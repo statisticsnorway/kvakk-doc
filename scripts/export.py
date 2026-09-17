@@ -9,7 +9,6 @@ from pathlib import Path
 import httpx
 from dotenv import load_dotenv
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG_DIR = ROOT / "config"
 DOTENV_PATH = ROOT / ".env"
@@ -48,9 +47,7 @@ def get_cloud_id(confluence_url: str) -> str:
     if not isinstance(tenant_info, dict) or not isinstance(
         cloud_id := tenant_info.get("cloudId"), str
     ):
-        raise SystemExit(
-            f"No Confluence Cloud ID was returned by {tenant_info_url}."
-        )
+        raise SystemExit(f"No Confluence Cloud ID was returned by {tenant_info_url}.")
     return cloud_id
 
 
@@ -66,7 +63,11 @@ def load_export_config() -> tuple[str, list[str]]:
     if not isinstance(command, str) or command not in allowed_commands:
         choices = ", ".join(sorted(allowed_commands))
         raise SystemExit(f"Invalid export command. Expected one of: {choices}")
-    if not isinstance(urls, list) or not urls or not all(isinstance(url, str) for url in urls):
+    if (
+        not isinstance(urls, list)
+        or not urls
+        or not all(isinstance(url, str) for url in urls)
+    ):
         raise SystemExit("Export config 'urls' must be a non-empty list of strings.")
 
     return command, urls

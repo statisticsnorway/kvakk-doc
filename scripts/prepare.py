@@ -6,10 +6,12 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from urllib.parse import quote, unquote, urlsplit, urlunsplit
+from urllib.parse import quote
+from urllib.parse import unquote
+from urllib.parse import urlsplit
+from urllib.parse import urlunsplit
 
 import markdown
-
 
 ROOT = Path(__file__).resolve().parents[1]
 RAW_DIR = ROOT / "confluence" / "raw"
@@ -72,7 +74,9 @@ def load_root_navigation() -> list[str]:
     if not isinstance(navigation, list) or not all(
         isinstance(item, str) and item for item in navigation
     ):
-        raise SystemExit("Navigation config 'root' must be a list of non-empty strings.")
+        raise SystemExit(
+            "Navigation config 'root' must be a list of non-empty strings."
+        )
     return navigation
 
 
@@ -108,7 +112,9 @@ def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
             continue
         destination = generated_destination(source, root_source, descendant_root)
         if destination in page_map.values():
-            raise SystemExit(f"Generated page collision: {destination.relative_to(ROOT)}")
+            raise SystemExit(
+                f"Generated page collision: {destination.relative_to(ROOT)}"
+            )
         page_map[source] = destination
 
         for attachment in page.get("attachments", {}).values():
@@ -119,7 +125,12 @@ def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
                 )
             destination = ATTACHMENTS_DIR / attachment_source.name
             previous = next(
-                (path for path, target in attachment_map.items() if target == destination), None
+                (
+                    path
+                    for path, target in attachment_map.items()
+                    if target == destination
+                ),
+                None,
             )
             if previous is not None and previous != attachment_source:
                 raise SystemExit(
@@ -145,7 +156,7 @@ def convert_callouts(text: str) -> str:
             continue
 
         indent = match["indent"]
-        output.append(f'{indent}!!! {match["kind"].lower()}\n')
+        output.append(f"{indent}!!! {match['kind'].lower()}\n")
         index += 1
         while index < len(lines):
             quoted = re.match(rf"^{re.escape(indent)}> ?(.*?)(\r?\n)?$", lines[index])
@@ -405,7 +416,13 @@ def rewrite_links(
                 while end < len(line) and line[end] == "`":
                     end += 1
                 ticks = end - index
-                code_ticks = 0 if code_ticks == ticks else ticks if code_ticks == 0 else code_ticks
+                code_ticks = (
+                    0
+                    if code_ticks == ticks
+                    else ticks
+                    if code_ticks == 0
+                    else code_ticks
+                )
                 rewritten.append(line[index:end])
                 index = end
                 continue
@@ -472,7 +489,9 @@ def prepare() -> list[str]:
     GENERATED_DIR.mkdir(parents=True)
 
     diagnostics: list[str] = []
-    for source, destination in sorted(page_map.items(), key=lambda item: item[1].as_posix()):
+    for source, destination in sorted(
+        page_map.items(), key=lambda item: item[1].as_posix()
+    ):
         text = source.read_text(encoding="utf-8")
         report_source_artifacts(text, source, diagnostics)
         text = convert_callouts(text)

@@ -1,15 +1,13 @@
 from pathlib import Path
 
-from scripts.prepare import (
-    convert_complex_tables,
-    convert_callouts,
-    enable_markdown_in_details,
-    generated_destination,
-    remove_escaped_emoji,
-    remove_people,
-    render_navigation,
-    rewrite_links,
-)
+from scripts.prepare import convert_callouts
+from scripts.prepare import convert_complex_tables
+from scripts.prepare import enable_markdown_in_details
+from scripts.prepare import generated_destination
+from scripts.prepare import remove_escaped_emoji
+from scripts.prepare import remove_people
+from scripts.prepare import render_navigation
+from scripts.prepare import rewrite_links
 
 
 def test_convert_callouts_preserves_multiline_content() -> None:
@@ -21,9 +19,7 @@ def test_convert_callouts_preserves_multiline_content() -> None:
 
 
 def test_enable_markdown_in_details_marks_exported_blocks() -> None:
-    text = (
-        "<details>\n<summary>Hvorfor</summary>\n\n- first\n- second\n\n</details>\n"
-    )
+    text = "<details>\n<summary>Hvorfor</summary>\n\n- first\n- second\n\n</details>\n"
 
     assert enable_markdown_in_details(text) == (
         '<details markdown="1">\n'
@@ -46,24 +42,30 @@ def test_generated_destination_uses_index_for_pages_with_children(
     source.touch()
     source.with_suffix("").mkdir()
 
-    assert generated_destination(
-        source,
-        tmp_path / "raw" / "Root.md",
-        descendant_root,
-        tmp_path / "generated",
-    ) == tmp_path / "generated" / "Parent" / "index.md"
+    assert (
+        generated_destination(
+            source,
+            tmp_path / "raw" / "Root.md",
+            descendant_root,
+            tmp_path / "generated",
+        )
+        == tmp_path / "generated" / "Parent" / "index.md"
+    )
 
 
 def test_generated_destination_keeps_leaf_filename(tmp_path: Path) -> None:
     descendant_root = tmp_path / "raw" / "Root"
     source = descendant_root / "Leaf.md"
 
-    assert generated_destination(
-        source,
-        tmp_path / "raw" / "Root.md",
-        descendant_root,
-        tmp_path / "generated",
-    ) == tmp_path / "generated" / "Leaf.md"
+    assert (
+        generated_destination(
+            source,
+            tmp_path / "raw" / "Root.md",
+            descendant_root,
+            tmp_path / "generated",
+        )
+        == tmp_path / "generated" / "Leaf.md"
+    )
 
 
 def test_render_navigation_preserves_configured_order() -> None:
@@ -113,9 +115,7 @@ def test_remove_escaped_emoji_from_headings_labels_and_links() -> None:
     )
 
     assert remove_escaped_emoji(text) == (
-        "## Relaterte artikler\n"
-        "**Instruksjoner**\n"
-        "[Relaterte artikler](#related)\n"
+        "## Relaterte artikler\n**Instruksjoner**\n[Relaterte artikler](#related)\n"
     )
 
 
@@ -137,7 +137,7 @@ def test_convert_complex_tables_restores_colspan_and_lists() -> None:
 
     assert '<td colspan="2">Intro</td>' in result
     assert "<ul>\n<li>One</li>\n<li>Two</li>\n</ul>" in result
-    assert "<li>Other<ul>\n<li><a href=\"page.md\">Link</a></li>" in result
+    assert '<li>Other<ul>\n<li><a href="page.md">Link</a></li>' in result
 
 
 def test_convert_complex_tables_moves_full_cell_highlight_to_cell() -> None:
