@@ -19,6 +19,17 @@ type JsonObject = dict[str, object]
 
 
 def required_env(name: str) -> str:
+    """Read a required environment variable.
+
+    Args:
+        name: Environment variable name.
+
+    Returns:
+        The stripped environment variable value.
+
+    Raises:
+        SystemExit: If the variable is missing or empty.
+    """
     value = os.environ.get(name, "").strip()
     if not value:
         raise SystemExit(
@@ -29,6 +40,17 @@ def required_env(name: str) -> str:
 
 
 def get_cloud_id(confluence_url: str) -> str:
+    """Discover the Confluence Cloud tenant ID.
+
+    Args:
+        confluence_url: Base URL of the Confluence instance.
+
+    Returns:
+        The tenant's Cloud ID.
+
+    Raises:
+        SystemExit: If tenant discovery fails or returns no Cloud ID.
+    """
     tenant_info_url = f"{confluence_url}/_edge/tenant_info"
     try:
         response = httpx.get(
@@ -52,6 +74,14 @@ def get_cloud_id(confluence_url: str) -> str:
 
 
 def load_export_config() -> tuple[str, list[str]]:
+    """Load and validate the export command and source URLs.
+
+    Returns:
+        The configured command and Confluence URLs.
+
+    Raises:
+        SystemExit: If the export configuration is missing or invalid.
+    """
     try:
         config: JsonObject = json.loads(EXPORT_CONFIG_PATH.read_text(encoding="utf-8"))
         command = config["command"]
@@ -74,6 +104,11 @@ def load_export_config() -> tuple[str, list[str]]:
 
 
 def main() -> None:
+    """Export the configured Confluence content.
+
+    Raises:
+        SystemExit: If configuration, credentials, or the exporter are unavailable.
+    """
     load_dotenv(DOTENV_PATH, override=False)
 
     confluence_url = required_env("CONFLUENCE_URL").rstrip("/")

@@ -44,6 +44,17 @@ FULL_MARK = re.compile(
 
 
 def safe_source_path(relative_path: str) -> Path:
+    """Resolve an export path while keeping it inside the raw directory.
+
+    Args:
+        relative_path: Path relative to the raw export directory.
+
+    Returns:
+        The resolved source path.
+
+    Raises:
+        SystemExit: If the path escapes the raw export directory.
+    """
     path = (RAW_DIR / relative_path).resolve()
     if not path.is_relative_to(RAW_DIR.resolve()):
         raise SystemExit(f"Export path leaves {RAW_DIR}: {relative_path}")
@@ -56,6 +67,18 @@ def generated_destination(
     descendant_root: Path,
     generated_dir: Path = GENERATED_DIR,
 ) -> Path:
+    """Map a raw page to its generated documentation path.
+
+    Args:
+        source: Raw Markdown page path.
+        root_source: Root page of the selected export.
+        descendant_root: Directory containing exported descendants.
+        generated_dir: Destination documentation directory.
+
+    Returns:
+        The generated page path.
+
+    """
     if source == root_source:
         return generated_dir / "index.md"
 
@@ -66,6 +89,14 @@ def generated_destination(
 
 
 def load_root_navigation() -> list[str]:
+    """Load the configured top-level navigation order.
+
+    Returns:
+        Ordered section names.
+
+    Raises:
+        SystemExit: If the navigation configuration is missing or invalid.
+    """
     try:
         config = json.loads(NAVIGATION_PATH.read_text(encoding="utf-8"))
         navigation = config["root"]
@@ -81,11 +112,28 @@ def load_root_navigation() -> list[str]:
 
 
 def render_navigation(items: list[str]) -> str:
+    """Render section names as an awesome-nav configuration.
+
+    Args:
+        items: Ordered section names.
+
+    Returns:
+        YAML navigation content.
+    """
     entries = ["  - index.md", *(f"  - {json.dumps(item)}" for item in items)]
     return "nav:\n" + "\n".join(entries) + "\nappend_unmatched: true\n"
 
 
 def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
+    """Load and validate the exported page and attachment mappings.
+
+    Returns:
+        The Confluence origin, page map, and attachment map.
+
+    Raises:
+        SystemExit: If the lockfile or any referenced export file is invalid.
+        ValueError: If the lockfile version or organization count is unsupported.
+    """
     try:
         lock = json.loads(LOCK_PATH.read_text(encoding="utf-8"))
         if lock["lockfile_version"] != 2:
@@ -144,6 +192,14 @@ def load_export() -> tuple[str, dict[Path, Path], dict[Path, Path]]:
 
 
 def convert_callouts(text: str) -> str:
+    """Convert exported GitHub-style callouts to admonitions.
+
+    Args:
+        text: Exported Markdown content.
+
+    Returns:
+        Markdown with compatible admonition syntax.
+    """
     lines = text.splitlines(keepends=True)
     output: list[str] = []
     index = 0
@@ -170,10 +226,26 @@ def convert_callouts(text: str) -> str:
 
 
 def enable_markdown_in_details(text: str) -> str:
+    """Enable Markdown parsing in exported details elements.
+
+    Args:
+        text: Exported Markdown content.
+
+    Returns:
+        Markdown with annotated details elements.
+    """
     return DETAILS.sub(r'\g<indent><details markdown="1">', text)
 
 
 def split_table_row(line: str) -> list[str] | None:
+    """Split a Markdown table row into stripped cells.
+
+    Args:
+        line: Potential Markdown table row.
+
+    Returns:
+        Cell content, or ``None`` when the line is not a complete table row.
+    """
     stripped = line.rstrip("\r\n").strip()
     if not stripped.startswith("|") or not stripped.endswith("|"):
         return None
@@ -181,6 +253,14 @@ def split_table_row(line: str) -> list[str] | None:
 
 
 def remove_people(text: str) -> str:
+    """Remove Confluence people links and table columns containing them.
+
+    Args:
+        text: Exported Markdown content.
+
+    Returns:
+        Markdown without people names or profile links.
+    """
     lines = text.splitlines(keepends=True)
     output: list[str] = []
     index = 0
@@ -231,6 +311,14 @@ def remove_people(text: str) -> str:
 
 
 def remove_escaped_emoji(text: str) -> str:
+    """Remove exported UTF-16 emoji escapes outside code fences.
+
+    Args:
+        text: Exported Markdown content.
+
+    Returns:
+        Markdown without malformed emoji escape text.
+    """
     output: list[str] = []
     in_fence = False
     fence = ""
@@ -249,6 +337,14 @@ def remove_escaped_emoji(text: str) -> str:
 
 
 def render_table_cell(cell: str) -> tuple[str, str]:
+    """Render exported table-cell Markdown as HTML.
+
+    Args:
+        cell: Exported cell content.
+
+    Returns:
+        Rendered HTML and any cell-level style attribute.
+    """
     style = ""
     mark = FULL_MARK.fullmatch(cell.strip())
     if mark:
@@ -275,6 +371,14 @@ def render_table_cell(cell: str) -> tuple[str, str]:
 
 
 def convert_complex_tables(text: str) -> str:
+    """Restore lists and column spans in flattened Confluence tables.
+
+    Args:
+        text: Exported Markdown content.
+
+    Returns:
+        Markdown with complex tables represented as semantic HTML.
+    """
     lines = text.splitlines(keepends=True)
     output: list[str] = []
     index = 0
@@ -330,6 +434,14 @@ def convert_complex_tables(text: str) -> str:
 
 
 def split_destination(destination: str) -> tuple[str, str]:
+    """Separate a Markdown link target from its optional suffix.
+
+    Args:
+        destination: Raw Markdown link destination.
+
+    Returns:
+        The URL target and trailing title or whitespace.
+    """
     if destination.startswith("<") and ">" in destination:
         end = destination.index(">")
         return destination[1:end], destination[end + 1 :]
@@ -338,6 +450,15 @@ def split_destination(destination: str) -> tuple[str, str]:
 
 
 def relative_url(source: Path, destination: Path) -> str:
+    """Build an encoded relative URL between generated files.
+
+    Args:
+        source: Generated page containing the link.
+        destination: Generated link target.
+
+    Returns:
+        A percent-encoded relative URL.
+    """
     return quote(
         Path(os.path.relpath(destination, source.parent)).as_posix(),
         safe="/._-~",
@@ -345,6 +466,15 @@ def relative_url(source: Path, destination: Path) -> str:
 
 
 def external_search_url(origin: str, raw_target: str) -> str:
+    """Build a Confluence search URL for a page outside the export.
+
+    Args:
+        origin: Confluence instance origin.
+        raw_target: Original relative page target.
+
+    Returns:
+        A Confluence search URL based on the target title.
+    """
     title = Path(unquote(urlsplit(raw_target).path)).stem.replace("_", "?")
     return f"{origin}/wiki/search?text={quote(title)}"
 
@@ -359,6 +489,21 @@ def rewrite_target(
     diagnostics: list[str],
     line_number: int,
 ) -> str:
+    """Rewrite one link target for the generated documentation tree.
+
+    Args:
+        target: Original link target.
+        source: Raw page containing the link.
+        destination: Generated page containing the rewritten link.
+        origin: Confluence instance origin.
+        page_map: Raw-to-generated page mapping.
+        attachment_map: Raw-to-generated attachment mapping.
+        diagnostics: Collection receiving link warnings.
+        line_number: Source line containing the link.
+
+    Returns:
+        The rewritten link target.
+    """
     if not target or target.startswith(("#", "mailto:", "tel:", "data:")):
         return target
     parsed = urlsplit(target)
@@ -390,6 +535,20 @@ def rewrite_links(
     attachment_map: dict[Path, Path],
     diagnostics: list[str],
 ) -> str:
+    """Rewrite Markdown links while preserving code spans and fences.
+
+    Args:
+        text: Exported Markdown content.
+        source: Raw page containing the links.
+        destination: Generated destination page.
+        origin: Confluence instance origin.
+        page_map: Raw-to-generated page mapping.
+        attachment_map: Raw-to-generated attachment mapping.
+        diagnostics: Collection receiving link warnings.
+
+    Returns:
+        Markdown with rewritten links.
+    """
     output: list[str] = []
     in_fence = False
     fence = ""
@@ -470,6 +629,13 @@ def rewrite_links(
 
 
 def report_source_artifacts(text: str, source: Path, diagnostics: list[str]) -> None:
+    """Report unresolved artifacts found in exported content.
+
+    Args:
+        text: Exported Markdown content.
+        source: Raw source page.
+        diagnostics: Collection receiving warnings.
+    """
     for line_number, line in enumerate(text.splitlines(), 1):
         for match in INACCESSIBLE.finditer(line):
             diagnostics.append(
@@ -482,6 +648,14 @@ def report_source_artifacts(text: str, source: Path, diagnostics: list[str]) -> 
 
 
 def prepare() -> list[str]:
+    """Regenerate site-ready documentation from the raw export.
+
+    Returns:
+        Warnings discovered while processing source content.
+
+    Raises:
+        SystemExit: If export metadata, files, or navigation are invalid.
+    """
     origin, page_map, attachment_map = load_export()
     root_navigation = load_root_navigation()
     if GENERATED_DIR.exists():
@@ -532,6 +706,7 @@ def prepare() -> list[str]:
 
 
 def main() -> None:
+    """Prepare documentation and print processing diagnostics."""
     diagnostics = prepare()
     for diagnostic in diagnostics:
         print(f"warning: {diagnostic}", file=sys.stderr)

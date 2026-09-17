@@ -61,7 +61,7 @@ On Windows PowerShell, create the environment file with:
 
 ```powershell
 uv sync
-Copy-Item config/.env.example .env
+copy config/.env.example .env
 ```
 
 Add the Confluence username and API token to `.env`. The Cloud ID is discovered
