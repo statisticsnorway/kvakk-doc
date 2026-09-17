@@ -4,7 +4,10 @@ import json
 import os
 import shutil
 import subprocess
+from datetime import datetime
+from hashlib import sha256
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 import httpx
 from dotenv import load_dotenv
@@ -14,6 +17,10 @@ CONFIG_DIR = ROOT / "config"
 DOTENV_PATH = ROOT / ".env"
 CME_CONFIG_PATH = CONFIG_DIR / "cme.json"
 EXPORT_CONFIG_PATH = CONFIG_DIR / "export.json"
+RAW_DIR = ROOT / "confluence" / "raw"
+LOCK_PATH = RAW_DIR / "confluence-lock.json"
+INDEX_PATH = ROOT / "docs" / "index.md"
+TIMESTAMP_PREFIX = "Sist eksportert fra Confluence: "
 
 type JsonObject = dict[str, object]
 
@@ -103,6 +110,73 @@ def load_export_config() -> tuple[str, list[str]]:
     return command, urls
 
 
+def export_fingerprint(
+    export_dir: Path = RAW_DIR, lock_path: Path = LOCK_PATH
+) -> dict[str, str]:
+    """Fingerprint exported files while ignoring the lock timestamp.
+
+    Args:
+        export_dir: Root directory containing the Confluence export.
+        lock_path: Export lockfile whose timestamp should be ignored.
+
+    Returns:
+        Content hashes keyed by paths relative to the export directory.
+
+    Raises:
+        OSError: If an exported file cannot be read.
+        json.JSONDecodeError: If the lockfile is invalid JSON.
+    """
+    fingerprint: dict[str, str] = {}
+    if not export_dir.exists():
+        return fingerprint
+
+    try:
+        for path in sorted(item for item in export_dir.rglob("*") if item.is_file()):
+            if path == lock_path:
+                lock = json.loads(path.read_text(encoding="utf-8"))
+                lock.pop("last_export", None)
+                content = json.dumps(
+                    lock, sort_keys=True, separators=(",", ":")
+                ).encode()
+            else:
+                content = path.read_bytes()
+            fingerprint[path.relative_to(export_dir).as_posix()] = sha256(
+                content
+            ).hexdigest()
+    except (OSError, json.JSONDecodeError):
+        raise
+    return fingerprint
+
+
+def update_export_timestamp(
+    index_path: Path = INDEX_PATH, timestamp: datetime | None = None
+) -> None:
+    """Update the standalone export timestamp in the landing page.
+
+    Args:
+        index_path: Landing page to update.
+        timestamp: Timestamp to write, defaulting to the current Oslo time.
+
+    Raises:
+        OSError: If the landing page cannot be read or written.
+    """
+    current = timestamp or datetime.now(ZoneInfo("Europe/Oslo"))
+    replacement = f"{TIMESTAMP_PREFIX}{current.strftime('%Y-%m-%d %H:%M')}"
+    try:
+        lines = index_path.read_text(encoding="utf-8").splitlines()
+        for index, line in enumerate(lines):
+            if line.startswith(TIMESTAMP_PREFIX):
+                lines[index] = replacement
+                break
+        else:
+            if lines and lines[-1]:
+                lines.append("")
+            lines.append(replacement)
+        index_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    except OSError:
+        raise
+
+
 def main() -> None:
     """Export the configured Confluence content.
 
@@ -131,12 +205,15 @@ def main() -> None:
     env["CME_CONFIG_PATH"] = str(CME_CONFIG_PATH)
     env["CME_AUTH"] = json.dumps(auth)
 
+    before = export_fingerprint()
     subprocess.run(
         [cme, command, *urls],
         cwd=ROOT,
         env=env,
         check=True,
     )
+    if export_fingerprint() != before:
+        update_export_timestamp()
 
 
 if __name__ == "__main__":
