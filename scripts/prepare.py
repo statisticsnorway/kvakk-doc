@@ -114,6 +114,8 @@ def load_root_navigation() -> list[str]:
 def render_navigation(items: list[str]) -> str:
     """Render section names as an awesome-nav configuration.
 
+    Needed to get a custom order ofthe elements in the left menu.
+
     Args:
         items: Ordered section names.
 
