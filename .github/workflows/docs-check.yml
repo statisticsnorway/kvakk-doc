@@ -2,15 +2,6 @@ name: Check documentation
 
 on:
   pull_request:
-    paths:
-      - confluence/raw/**
-      - docs/**
-      - scripts/**
-      - tests/**
-      - zensical.toml
-      - pyproject.toml
-      - uv.lock
-      - .github/workflows/docs-check.yml
 
 permissions:
   contents: read

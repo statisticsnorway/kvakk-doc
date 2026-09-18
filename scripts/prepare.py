@@ -517,7 +517,11 @@ def rewrite_target(
     resolved = (source.parent / unquote(parsed.path)).resolve()
     mapped = page_map.get(resolved) or attachment_map.get(resolved)
     if mapped is not None:
-        path = relative_url(destination, mapped)
+        path = (
+            "./"
+            if mapped == destination and destination.name == "index.md"
+            else relative_url(destination, mapped)
+        )
         return urlunsplit(("", "", path, parsed.query, parsed.fragment))
 
     if parsed.path.lower().endswith(".md"):

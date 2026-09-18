@@ -182,6 +182,44 @@ def test_rewrite_links_handles_parentheses_and_skips_code(tmp_path: Path) -> Non
     assert diagnostics == []
 
 
+def test_rewrite_links_uses_directory_url_for_generated_index_self_link(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "raw" / "Parent.md"
+    destination = tmp_path / "generated" / "Parent" / "index.md"
+
+    result = rewrite_links(
+        "[self](Parent.md?view=all#details)\n",
+        source,
+        destination,
+        "https://example.atlassian.net",
+        {source.resolve(): destination},
+        {},
+        [],
+    )
+
+    assert result == "[self](./?view=all#details)\n"
+
+
+def test_rewrite_links_preserves_filename_for_generated_leaf_self_link(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "raw" / "Leaf.md"
+    destination = tmp_path / "generated" / "Leaf.md"
+
+    result = rewrite_links(
+        "[self](Leaf.md?view=all#details)\n",
+        source,
+        destination,
+        "https://example.atlassian.net",
+        {source.resolve(): destination},
+        {},
+        [],
+    )
+
+    assert result == "[self](Leaf.md?view=all#details)\n"
+
+
 def test_rewrite_links_absolutizes_confluence_paths(tmp_path: Path) -> None:
     source = tmp_path / "raw" / "source.md"
     destination = tmp_path / "generated" / "source.md"
